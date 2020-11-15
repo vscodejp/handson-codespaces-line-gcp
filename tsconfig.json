@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
+    "types": [
+      "jest"
+    ],
+  },
+  "include": [
+    "src/*"
+  ],
+  "exclude": [
+    "*.test.ts",
+    "node_modules"
+  ]
+}

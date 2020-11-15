@@ -1,0 +1,47 @@
+name: GitHub Codespaces x LINE x GCP CI/CD
+  
+# This is a basic workflow that is manually triggered
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  RUN_REGION: ${{ secrets.GCP_REGION }}
+  SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
+  BASE_URL: ${{ secrets.BASE_URL }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# https://github.com/GoogleCloudPlatform/github-actions/blob/master/example-workflows/cloud-run/.github/workflows/cloud-run.yml
+# https://github.com/GoogleCloudPlatform/github-actions/blob/master/setup-gcloud/README.md
+jobs:
+  build_deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: 'latest'
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          export_default_credentials: true
+          
+      - name: Build
+        run: |-
+          gcloud builds submit \
+            --quiet \
+            --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME"
+      # Deploy image to Cloud Run
+      - name: Deploy
+        run: |-
+          gcloud run deploy "$SERVICE_NAME" \
+            --quiet \
+            --region "$RUN_REGION" \
+            --image "gcr.io/$PROJECT_ID/$SERVICE_NAME" \
+            --platform "managed"
+  

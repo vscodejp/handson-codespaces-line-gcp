@@ -1,0 +1,40 @@
+{
+	"name": "VSCode x GCP x LINE",
+	"dockerFile": "Dockerfile",
+	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind" ],
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash",
+        	"jestrunner.jestCommand": "npm run test"
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"ms-vscode.vscode-typescript-tslint-plugin",
+		"eamodio.gitlens",
+		"humao.rest-client",
+		"GitHub.vscode-pull-request-github",
+		"VisualStudioExptTeam.vscodeintellicode",
+		"andys8.jest-snippets",
+		"Orta.vscode-jest",
+		"firsttris.vscode-jest-runner",
+		"esbenp.prettier-vscode",
+		"ms-vsliveshare.vsliveshare-pack",
+		"hediet.vscode-drawio",
+		"googlecloudtools.cloudcode",
+		"cschleiden.vscode-github-actions"
+	]
+	
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "docker --version",
+
+	// Uncomment when using a ptrace-based debugger like C++, Go, and Rust
+	// "runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	// "remoteUser": "vscode"
+}
